@@ -12,12 +12,13 @@
     <description><![CDATA[回顾 1. springboot概述 主要作用就是帮我们快速的构建庞大的JavaEE项目 特点： 版本锁定 起步依赖 自动配置 2. 搭建springboot项目 pom.xml 继承parent 导入xxx起步依赖（集合体） 启动类 @SpringBootApplication 配置文件 application.yml 3. yml配置文件 语法：严格区分大小写，使用缩进表示层级关系，属性值之前（冒号之间）必须有空格 格式： 普通类型 对象类型 集合类型	读取配置文件： @Value Enviroment @ConfigurationProperties 4. springboot整合其它框架 springboot + springMVC + mybatisPlus + JSP等 一 SpringBoot 整合其它框架 1.0 整合FreeMark【掌握】 1.0.1 POM &lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-freemarker&lt;/artifactId&gt; &lt;/dependency&gt; 1.0.2 启动类以及Controller三层 @SpringBootApplication public class SpringbootAllApplication { public static void main(String[] args) { SpringApplication.run(SpringbootAllApplication.class, args); } } 1.0.3 视图解析配置 spring.freemarker.template-loader-path=classpath:/templates/ spring.freemarker.suffix=.ftlh 1.0.4 页面 &lt;!]]></description>
 </item>
 <item>
-    <title>Test</title>
+    <title>陈雨琪！！我爱你</title>
     <link>https://cheneycqg.github.io/posts/test/</link>
     <pubDate>Sat, 29 Jul 2023 17:40:19 &#43;0800</pubDate>
     <author>Author</author>
     <guid>https://cheneycqg.github.io/posts/test/</guid>
-    <description><![CDATA[This is test.]]></description>
+    <description><![CDATA[This is test.
+陈雨琪！！我爱你 陈雨琪！！我爱你 陈雨琪！！我爱你 ]]></description>
 </item>
 </channel>
 </rss>
