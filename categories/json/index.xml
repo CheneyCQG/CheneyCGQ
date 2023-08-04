@@ -12,10 +12,10 @@
         <pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate>
         
         <guid>https://cheneycqg.github.io/post/objectmapper/</guid>
-        <description>&lt;img src="https://cheneycqg.github.io/post/objectmapper/pawel-czerwinski-8uZPynIu-rQ-unsplash.png" alt="Featured image of post ObjectMapper不要一直new啦！！！" /&gt;&lt;p&gt;​		很多同学发现，jackson并没有类似fastjson的&lt;code&gt;JSON.parseObjec&lt;/code&gt;这样的，确实看起来很快的方法。要想解析json，你不得不new一个ObjectMapper，来处理真正的解析动作。&lt;/p&gt;
+        <description>&lt;img src="https://cheneycqg.github.io/post/objectmapper/pawel-czerwinski-8uZPynIu-rQ-unsplash.png" alt="Featured image of post ObjectMapper不要一直new啦！！！" /&gt;&lt;p&gt; 很多同学发现，jackson并没有类似fastjson的&lt;code&gt;JSON.parseObjec&lt;/code&gt;这样的，确实看起来很快的方法。要想解析json，你不得不new一个ObjectMapper，来处理真正的解析动作。&lt;/p&gt;
 &lt;h1 id=&#34;jackson&#34;&gt;Jackson&lt;/h1&gt;
-&lt;p&gt;​		自从国产之光fastjson频频暴雷，jackson json的使用是越来越广泛了。尤其是spring家族把它搞成了默认的JSON处理包，jackson的使用数量更是呈爆炸式发展。&lt;/p&gt;
-&lt;p&gt;​		很多同学发现，jackson并没有类似fastjson的&lt;code&gt;JSON.parseObjec&lt;/code&gt;这样的，确实看起来很快的方法。要想解析json，你不得不new一个ObjectMapper，来处理真正的解析动作。&lt;/p&gt;
+&lt;p&gt;​		 自从国产之光fastjson频频暴雷，jackson json的使用是越来越广泛了。尤其是spring家族把它搞成了默认的JSON处理包，jackson的使用数量更是呈爆炸式发展。&lt;/p&gt;
+&lt;p&gt;​		 很多同学发现，jackson并没有类似fastjson的&lt;code&gt;JSON.parseObjec&lt;/code&gt;这样的，确实看起来很快的方法。要想解析json，你不得不new一个ObjectMapper，来处理真正的解析动作。&lt;/p&gt;
 &lt;p&gt;就像下面这样。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; String &lt;span style=&#34;color:#a6e22e&#34;&gt;getCarString&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Car car&lt;span style=&#34;color:#f92672&#34;&gt;){&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ObjectMapper objectMapper &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; ObjectMapper&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
@@ -29,19 +29,23 @@
 &lt;p&gt;new和不new，真的区别有那么大么？&lt;/p&gt;
 &lt;p&gt;有一次，xjjdog隐晦的指出某段被频繁调用的代码问题，被小伙伴怒吼着拿出证据。&lt;/p&gt;
 &lt;p&gt;证据？这得搬出Java中的基准测试工具JMH，才能一探究竟。&lt;/p&gt;
-&lt;p&gt;​		JMH(the Java Microbenchmark Harness) 就是这样一个能够做基准测试的工具。如果你通过我们一系列的工具，定位到了热点代码，要测试它的性能数据，评估改善情况，就可以交给JMH。它的测量精度非常高，最高可达到纳秒的级别。&lt;/p&gt;
-&lt;p&gt;​		&lt;code&gt;	JMH&lt;/code&gt;是一个jar包，它和单元测试框架&lt;code&gt;JUnit&lt;/code&gt;非常的像，可以通过注解进行一些基础配置。这部分配置有很多是可以通过main方法的&lt;code&gt;OptionsBuilder&lt;/code&gt;进行设置的。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://mmbiz.qpic.cn/mmbiz_png/cvQbJDZsKLoMOD1Fps2mz3rZBhK4pD1swiap8ia6XPCbbcQfZw7zhDicnCIsQA6OR5iah3uXsoVHMicZ8XUJu8smtoQ/640?wx_fmt=png&amp;amp;wxfrom=5&amp;amp;wx_lazy=1&amp;amp;wx_co=1&amp;amp;tp=wxpic&#34;
-	
-	
-	
+&lt;p&gt;​		 JMH(the Java Microbenchmark Harness) 就是这样一个能够做基准测试的工具。如果你通过我们一系列的工具，定位到了热点代码，要测试它的性能数据，评估改善情况，就可以交给JMH。它的测量精度非常高，最高可达到纳秒的级别。&lt;/p&gt;
+&lt;p&gt;​		 &lt;code&gt;	JMH&lt;/code&gt;是一个jar包，它和单元测试框架&lt;code&gt;JUnit&lt;/code&gt;非常的像，可以通过注解进行一些基础配置。这部分配置有很多是可以通过main方法的&lt;code&gt;OptionsBuilder&lt;/code&gt;进行设置的。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://cheneycqg.github.io/post/objectmapper/20230804134753.png&#34;
+	width=&#34;834&#34;
+	height=&#34;506&#34;
+	srcset=&#34;https://cheneycqg.github.io/post/objectmapper/20230804134753_huc5252033c061ef1e45400dff536dfa60_150063_480x0_resize_box_3.png 480w, https://cheneycqg.github.io/post/objectmapper/20230804134753_huc5252033c061ef1e45400dff536dfa60_150063_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;图片&#34;
 	
 	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;164&#34;
+		data-flex-basis=&#34;395px&#34;
+	
 &gt;&lt;/p&gt;
-&lt;p&gt;​		上图是一个典型的JMH程序执行的内容。通过开启多个进程，多个线程，首先执行预热，然后执行迭代，最后汇总所有的测试数据进行分析。在执行前后，还可以根据粒度处理一些前置和后置操作。&lt;/p&gt;
+&lt;p&gt;​		 上图是一个典型的JMH程序执行的内容。通过开启多个进程，多个线程，首先执行预热，然后执行迭代，最后汇总所有的测试数据进行分析。在执行前后，还可以根据粒度处理一些前置和后置操作。&lt;/p&gt;
 &lt;h2 id=&#34;jmh测试结果&#34;&gt;JMH测试结果&lt;/h2&gt;
 &lt;p&gt;为了测试上面的场景，我们创造了下面的基准测试类。分为三个测试场景：&lt;/p&gt;
 &lt;ol&gt;
@@ -103,13 +107,13 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ObjectMapperTest&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;globalTest&lt;/span&gt;             thrpt    &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;  &lt;span style=&#34;color:#ae81ff&#34;&gt;25125094.559&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;±&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1754308.010&lt;/span&gt;  ops&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;s
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ObjectMapperTest&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;globalTestThreadLocal&lt;/span&gt;  thrpt    &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;  &lt;span style=&#34;color:#ae81ff&#34;&gt;31780573.549&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;±&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;7779240.155&lt;/span&gt;  ops&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;s
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ObjectMapperTest&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;localTest&lt;/span&gt;              thrpt    &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;   &lt;span style=&#34;color:#ae81ff&#34;&gt;2131394.345&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;±&lt;/span&gt;  &lt;span style=&#34;color:#ae81ff&#34;&gt;216974.682&lt;/span&gt;  ops&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;s
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;​		从测试结果可以看出，如果我们每次调用都new一个ObjectMapper，每秒可以执行200万次JSON解析；如果全局使用一个ObjectMapper，则每秒可以执行2000多万次，速度足足快了10倍。&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;​		 从测试结果可以看出，如果我们每次调用都new一个ObjectMapper，每秒可以执行200万次JSON解析；如果全局使用一个ObjectMapper，则每秒可以执行2000多万次，速度足足快了10倍。&lt;/p&gt;
 &lt;p&gt;如果使用ThreadLocal的方式，每个线程给它分配一个解析器，则性能会有少许上升，但也没有达到非常夸张的地步。&lt;/p&gt;
 &lt;p&gt;所以在项目中写代码的时候，我们只需要保证有一个全局的ObjectMapper就可以了。&lt;/p&gt;
-&lt;p&gt;​		当然，由于ObjectMapper有很多的特性需要配置，你可能会为不同的应用场景分配一个单独使用的ObjectMapper。总之，它的数量不需要太多，因为它是线程安全的。&lt;/p&gt;
+&lt;p&gt;​		 当然，由于ObjectMapper有很多的特性需要配置，你可能会为不同的应用场景分配一个单独使用的ObjectMapper。总之，它的数量不需要太多，因为它是线程安全的。&lt;/p&gt;
 &lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
-&lt;p&gt;​		所以结论就比较清晰了，我们只需要在整个项目里使用一个ObjectMapper就可以了，没必要傻不拉几的每次都new一个，毕竟性能差了10倍。如果你的JSON有很多自定义的配置，使用全局的变量更能凸显它的优势。&lt;/p&gt;
-&lt;p&gt;​		不要觉得这样做没有必要，保持良好的编码习惯永远是好的。高性能的代码都是点点滴滴积累起来的。不积跬步,无以至千里。不积小流,无以成江海，说的就是这个道理。&lt;/p&gt;</description>
+&lt;p&gt;​		 所以结论就比较清晰了，我们只需要在整个项目里使用一个ObjectMapper就可以了，没必要傻不拉几的每次都new一个，毕竟性能差了10倍。如果你的JSON有很多自定义的配置，使用全局的变量更能凸显它的优势。&lt;/p&gt;
+&lt;p&gt;​		 不要觉得这样做没有必要，保持良好的编码习惯永远是好的。高性能的代码都是点点滴滴积累起来的。不积跬步,无以至千里。不积小流,无以成江海，说的就是这个道理。&lt;/p&gt;</description>
         </item>
         
     </channel>
