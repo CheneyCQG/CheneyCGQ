@@ -7,9 +7,25 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-CN</language>
         <lastBuildDate>Fri, 04 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://cheneycqg.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>java</title>
+        <link>https://cheneycqg.github.io/categories/java/</link>
+        <pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://cheneycqg.github.io/categories/java/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>json</title>
+        <link>https://cheneycqg.github.io/categories/json/</link>
+        <pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://cheneycqg.github.io/categories/json/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>syntax</title>
         <link>https://cheneycqg.github.io/categories/syntax/</link>
-        <pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate>
+        <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
         
         <guid>https://cheneycqg.github.io/categories/syntax/</guid>
         <description></description>
@@ -17,7 +33,7 @@
         <item>
         <title>themes</title>
         <link>https://cheneycqg.github.io/categories/themes/</link>
-        <pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate>
+        <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
         
         <guid>https://cheneycqg.github.io/categories/themes/</guid>
         <description></description>
