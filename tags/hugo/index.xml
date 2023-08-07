@@ -6,7 +6,346 @@
         <description>Recent content in hugo on Cheney Site</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-CN</language>
-        <lastBuildDate>Sun, 06 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://cheneycqg.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 07 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://cheneycqg.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>windows系统搭建hugo&#43;github博客</title>
+        <link>https://cheneycqg.github.io/post/buildsite0/</link>
+        <pubDate>Mon, 07 Aug 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://cheneycqg.github.io/post/buildsite0/</guid>
+        <description>&lt;img src="https://cheneycqg.github.io/post/buildsite0/1.jpg" alt="Featured image of post windows系统搭建hugo&#43;github博客" /&gt;&lt;p&gt;在windows系统上利用hugo和github搭建个人博客。。。&lt;/p&gt;
+&lt;h2 id=&#34;hugo博客&#34;&gt;hugo博客&lt;/h2&gt;
+&lt;p&gt;这里跟着&lt;a class=&#34;link&#34; href=&#34;https://gohugo.io/getting-started/quick-start/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;官网教程&lt;/a&gt;进行配置，刚开始折腾hugo博客的话，最重要的是折腾成功，官网教程简单实用。hugo也有&lt;a class=&#34;link&#34; href=&#34;https://www.gohugo.org/doc/overview/quickstart/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;中文的官方文档&lt;/a&gt;，可以自主选择使用。&lt;/p&gt;
+&lt;h2 id=&#34;安装hugo&#34;&gt;安装hugo&lt;/h2&gt;
+&lt;p&gt;到官方的&lt;a class=&#34;link&#34; href=&#34;https://github.com/gohugoio/hugo/releases/latest&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitHub&lt;/a&gt;仓库下载适合你的操作系统的版本。解压后可以进行重命名，我解压后重命名为hugo。&lt;/p&gt;
+&lt;p&gt;把 hugo （或者是 Windows 的 hugo.exe） 放到你的 环境变量 PATH 所在的目录，因为下一步我们将会用到它。&lt;/p&gt;
+&lt;h2 id=&#34;创建站点目录&#34;&gt;创建站点目录&lt;/h2&gt;
+&lt;p&gt;在磁盘中新建一个文件夹作为自己的站点目录，如：myhugo，在文件夹下打开cmd执行如下命令：&lt;code&gt;hugo new site myhugo&lt;/code&gt;，然后名字为myhugo的站点目录就创建好了。
+生成的站点目录如下： &lt;img src=&#34;https://cheneycqg.github.io/post/buildsite0/2.jpg&#34;
+	width=&#34;1206&#34;
+	height=&#34;625&#34;
+	srcset=&#34;https://cheneycqg.github.io/post/buildsite0/2_hudbd7f4383d182a3d9d1f2ce8f14ec233_39170_480x0_resize_q75_box.jpg 480w, https://cheneycqg.github.io/post/buildsite0/2_hudbd7f4383d182a3d9d1f2ce8f14ec233_39170_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;2&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;192&#34;
+		data-flex-basis=&#34;463px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;安装主题&#34;&gt;安装主题&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;cd ~/myhugo
+git clone https://github.com/CaiJimmy/hugo-theme-stack/ themes/hugo-theme-stack
+git submodule add https://github.com/CaiJimmy/hugo-theme-stack/ themes/hugo-theme-stack
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;切换主题&#34;&gt;切换主题&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;cd ~/myhugo
+mv config.toml config.toml_bak# 把原来的配置Even 的文件备份一下
+cp themes/hugo-theme-stack/exampleSite/config.yaml .
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;注意&#34;&gt;注意&lt;/h3&gt;
+&lt;p&gt;yaml文件作为配置文件，每个：后要加空格。&lt;/p&gt;
+&lt;h3 id=&#34;配置文件&#34;&gt;配置文件&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;baseURL: https://仓库名.github.io
+
+languageCode: zh-cn
+theme: hugo-theme-stack
+paginate: 5
+title: 
+
+languages:
+en:
+languageName: English
+title: &amp;quot;WCQ&#39;s Blog&amp;quot;
+weight: 1
+zh-cn:
+languageName: 中文
+title: 一不留神的博客
+weight: 2
+ar:
+languageName: عربي
+languagedirection: rtl
+title: موقع تجريبي
+weight: 3
+
+# Change it to your Disqus shortname before using
+disqusShortname: hugo-theme-stack
+
+# GA Tracking ID
+googleAnalytics: UA-232146632-1
+
+# Theme i18n support
+# Available values: ar, bn, ca, de, el, en, es, fr, hu, id, it, ja, ko, nl, pt-br, th, uk, zh-cn, zh-hk, zh-tw
+DefaultContentLanguage: zh-cn
+
+# Set hasCJKLanguage to true if DefaultContentLanguage is in [zh-cn ja ko]
+# This will make .Summary and .WordCount behave correctly for CJK languages.
+hasCJKLanguage: true
+
+permalinks:
+post: /p/:slug/
+page: /:slug/
+
+params:
+mainSections:
+- post
+featuredImageField: image
+rssFullContent: true
+favicon:
+
+footer:
+since: 2022
+customText:
+
+dateFormat:
+published: Jan 02, 2006
+lastUpdated: Jan 02, 2006 15:04 MST
+
+sidebar:
+emoji: 🍥
+subtitle: Guangdong University of Technology
+avatar:
+enabled: true
+local: true
+src: img/avatar.png
+
+article:
+math: true
+toc: true
+readingTime: true
+license:
+enabled: true
+default: Licensed under CC BY-NC-SA 4.0
+
+comments:
+enabled: true
+provider: utterances
+
+disqusjs:
+shortname:
+apiUrl:
+apiKey:
+admin:
+adminLabel:
+
+utterances:
+repo: wcq062821/blog_data
+issueTerm : pathname
+label: none
+
+remark42:
+host:
+site:
+locale:
+
+vssue:
+platform:
+owner:
+repo:
+clientId:
+clientSecret:
+autoCreateIssue: false
+
+# Waline client configuration see: https://waline.js.org/en/reference/component.html
+waline:
+serverURL:
+lang:
+pageview:
+emoji:
+- https://unpkg.com/@waline/emojis@1.0.1/weibo
+requiredMeta:
+- name
+- email
+- url
+locale:
+admin: Admin
+placeholder:
+
+twikoo:
+envId:
+region:
+path:
+lang:
+
+# See https://cactus.chat/docs/reference/web-client/#configuration for description of the various options
+cactus:
+defaultHomeserverUrl: &amp;quot;https://matrix.cactus.chat:8448&amp;quot;
+serverName: &amp;quot;cactus.chat&amp;quot;
+siteName: &amp;quot;&amp;quot; # You must insert a unique identifier here matching the one you registered (See https://cactus.chat/docs/getting-started/quick-start/#register-your-site)
+
+giscus:
+repo:
+repoID:
+category:
+categoryID:
+mapping:
+lightTheme:
+darkTheme:
+reactionsEnabled: 1
+emitMetadata: 0
+
+gitalk:
+owner:
+admin:
+repo:
+clientID:
+clientSecret:
+
+cusdis:
+host:
+id:
+widgets:
+homepage:
+- type: search
+- type: archives
+  params:
+  limit: 10
+- type: categories
+  params:
+  limit: 10
+- type: tag-cloud
+  params:
+  limit: 10
+page:
+- type: toc
+
+opengraph:
+twitter:
+# Your Twitter username
+site:
+
+# Available values: summary, summary_large_image
+card: summary_large_image
+
+defaultImage:
+opengraph:
+enabled: false
+local: false
+src:
+
+colorScheme:
+# Display toggle
+toggle: true
+
+# Available values: auto, light, dark
+default: auto
+
+imageProcessing:
+cover:
+enabled: true
+content:
+enabled: true
+
+### Custom menu
+### See https://docs.stack.jimmycai.com/configuration/custom-menu.html
+### To remove about, archive and search page menu item, remove `menu` field from their FrontMatter
+menu:
+main: []
+
+social:
+- identifier: github
+  name: GitHub
+  url: &amp;quot;https://github.com/wcq062821&amp;quot;
+  params:
+  icon: brand-github
+
+related:
+includeNewer: true
+threshold: 60
+toLower: false
+indices:
+- name: tags
+  weight: 100
+
+- name: categories
+  weight: 200
+
+markup:
+goldmark:
+renderer:
+## Set to true if you have HTML content inside Markdown
+unsafe: true
+tableOfContents:
+endLevel: 4
+ordered: true
+startLevel: 2
+highlight:
+noClasses: false
+codeFences: true
+guessSyntax: true
+lineNoStart: 1
+lineNos: true
+lineNumbersInTable: true
+tabWidth: 4
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;配置hugo配置文件&#34;&gt;配置hugo配置文件&lt;/h3&gt;
+&lt;p&gt;然后在站点目录的hugo.toml文件中最下边添加一行内容，添加的内容
+&lt;code&gt;theme = &#39;hugo-theme-stack&#39;&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;创建第一篇博客&#34;&gt;创建第一篇博客&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;hugo new posts/我的第一篇博客.md&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;然后在站点目录下的content/posts/下就相应的出现了一个文件&amp;quot;我的第一篇博客.md&amp;quot;&lt;/p&gt;
+&lt;h3 id=&#34;本地预览&#34;&gt;本地预览&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;hugo server -D&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;查看最后的连接就可以看到效果啦&lt;img src=&#34;https://cheneycqg.github.io/post/buildsite0/3.jpg&#34;
+	width=&#34;1851&#34;
+	height=&#34;1020&#34;
+	srcset=&#34;https://cheneycqg.github.io/post/buildsite0/3_huf4ad92d86fe01618fdca3394e1fd20ef_633926_480x0_resize_q75_box.jpg 480w, https://cheneycqg.github.io/post/buildsite0/3_huf4ad92d86fe01618fdca3394e1fd20ef_633926_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;3&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;181&#34;
+		data-flex-basis=&#34;435px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;部署博客到github&#34;&gt;部署博客到github&lt;/h2&gt;
+&lt;h3 id=&#34;配置github仓库&#34;&gt;配置github仓库&lt;/h3&gt;
+&lt;p&gt;在github创建账户，然后创建仓库，仓库命名格式为&amp;quot;yourname.github.io&amp;quot;，配置仓库的主分支为master，配置仓库设置界面的pages的主分支为master。&lt;/p&gt;
+&lt;h3 id=&#34;安装好git&#34;&gt;安装好git&lt;/h3&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/Zhy_201810576/article/details/124897085&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Windows系统Git安装教程&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;在本地生成ssh密钥&#34;&gt;在本地生成ssh密钥&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ssh-keygen&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;三次回车后密钥就生成了，生成的密钥在家目录下的.ssh目录下，将.ssh/的id_rsa.pub的内容复制到剪切板，然后 回到github网站，在帐户设置的SSH and GPG keys界面中添加剪切板的ssh公钥，然后给添加该密钥的记录随便起一 个名字用于区分可以了。&lt;/p&gt;
+&lt;h3 id=&#34;配置hugotoml&#34;&gt;配置hugo.toml&lt;/h3&gt;
+&lt;p&gt;将自己仓库的名字yourname.github.io添加到站点目录的hugo.toml配置文件中，将示例链接替换掉，然后设置博客 的语言，接着设置博客的名称，最后一行也就是第四行是咱刚开始就添加过了的，所以不用修改。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;baseURL = &#39;yourname.github.io&#39;
+languageCode = &#39;zh-cn&#39;
+title = &#39;MyBlogs&#39;
+theme = &#39;ananke&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;部署&#34;&gt;部署&lt;/h3&gt;
+&lt;p&gt;先将博客的草稿模式关闭，将true修改为false，然后回到站点目录的第一级目录，然后cmd下执行命令hugo生成public目录，再进入publib目录，先添加github的仓库链接，然后执行git命令进行部署hugo的操作。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git remote add origin git@github.com:yourname/yourname.github.io.git
+
+git add .
+git commit -m &amp;quot;upload&amp;quot;
+git push -u origin master
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;结束&#34;&gt;结束&lt;/h2&gt;
+&lt;p&gt;操作结束自己的个人博客也就建成了。我的如下：
+&lt;img src=&#34;https://cheneycqg.github.io/post/buildsite0/4.jpg&#34;
+	width=&#34;1920&#34;
+	height=&#34;885&#34;
+	srcset=&#34;https://cheneycqg.github.io/post/buildsite0/4_hud3a72ffe84594f06a24b3f1a08441966_729975_480x0_resize_q75_box.jpg 480w, https://cheneycqg.github.io/post/buildsite0/4_hud3a72ffe84594f06a24b3f1a08441966_729975_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;4&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;216&#34;
+		data-flex-basis=&#34;520px&#34;
+	
+&gt;&lt;/p&gt;</description>
+        </item>
+        <item>
         <title>一个github搭建多个博客</title>
         <link>https://cheneycqg.github.io/post/buildsite1/</link>
         <pubDate>Sun, 06 Aug 2023 00:00:00 +0000</pubDate>
