@@ -8,6 +8,82 @@
         <language>zh-CN</language>
         <lastBuildDate>Sat, 05 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://cheneycqg.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>一个github搭建多个博客</title>
+        <link>https://cheneycqg.github.io/post/buildsite1/</link>
+        <pubDate>Sat, 05 Aug 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://cheneycqg.github.io/post/buildsite1/</guid>
+        <description>&lt;img src="https://cheneycqg.github.io/post/buildsite1/1.jpg" alt="Featured image of post 一个github搭建多个博客" /&gt;&lt;p&gt;在已经有了一个以&lt;code&gt;username.github.io&lt;/code&gt;的博客后，再建立多个个人博客。&lt;/p&gt;
+&lt;h2 id=&#34;github&#34;&gt;github&lt;/h2&gt;
+&lt;p&gt;登录上自己的github，打开名字为&lt;code&gt;username&lt;/code&gt;的仓库。
+按如下图点击&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://cheneycqg.github.io/post/buildsite1/2.jpg&#34;
+	width=&#34;1920&#34;
+	height=&#34;885&#34;
+	srcset=&#34;https://cheneycqg.github.io/post/buildsite1/2_huf32e8404b7ccf12247fee18bf3e618e4_114754_480x0_resize_q75_box.jpg 480w, https://cheneycqg.github.io/post/buildsite1/2_huf32e8404b7ccf12247fee18bf3e618e4_114754_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;2&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;216&#34;
+		data-flex-basis=&#34;520px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://cheneycqg.github.io/post/buildsite1/3.jpg&#34;
+	width=&#34;1920&#34;
+	height=&#34;885&#34;
+	srcset=&#34;https://cheneycqg.github.io/post/buildsite1/3_hu5c343d704f24c919cbdcc50d2daaa5a4_103855_480x0_resize_q75_box.jpg 480w, https://cheneycqg.github.io/post/buildsite1/3_hu5c343d704f24c919cbdcc50d2daaa5a4_103855_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;3&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;216&#34;
+		data-flex-basis=&#34;520px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://cheneycqg.github.io/post/buildsite1/4.jpg&#34;
+	width=&#34;1920&#34;
+	height=&#34;885&#34;
+	srcset=&#34;https://cheneycqg.github.io/post/buildsite1/4_hu5e2db98108b178e2c939a7c270516ff8_199836_480x0_resize_q75_box.jpg 480w, https://cheneycqg.github.io/post/buildsite1/4_hu5e2db98108b178e2c939a7c270516ff8_199836_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;4&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;216&#34;
+		data-flex-basis=&#34;520px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;配置repositories&#34;&gt;配置repositories&lt;/h1&gt;
+&lt;p&gt;建好之后，点击&lt;code&gt;repositories&lt;/code&gt;建一个新仓库&lt;img src=&#34;https://cheneycqg.github.io/post/buildsite1/5.jpg&#34;
+	width=&#34;1089&#34;
+	height=&#34;834&#34;
+	srcset=&#34;https://cheneycqg.github.io/post/buildsite1/5_hu125974eecaf8e4a0c10de84a3a7ba7eb_57531_480x0_resize_q75_box.jpg 480w, https://cheneycqg.github.io/post/buildsite1/5_hu125974eecaf8e4a0c10de84a3a7ba7eb_57531_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;5&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;313px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;我用的是&lt;code&gt;master&lt;/code&gt;分支，所以我需要建一个&lt;code&gt;master&lt;/code&gt;分支，然后将master设为默认分支。&lt;/p&gt;
+&lt;h2 id=&#34;注意&#34;&gt;注意&lt;/h2&gt;
+&lt;p&gt;记得修改&lt;code&gt;settings&lt;/code&gt;中的&lt;code&gt;pages&lt;/code&gt;的&lt;code&gt;branch&lt;/code&gt;也要改为&lt;code&gt;master&lt;/code&gt;否则最后页面是加载不出来的。选好之后要点击&lt;code&gt;save&lt;/code&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;配置hugo&#34;&gt;配置HUGO&lt;/h3&gt;
+&lt;p&gt;和第一次搭建一样了。&lt;/p&gt;
+&lt;h4 id=&#34;h4&#34;&gt;H4&lt;/h4&gt;
+&lt;h5 id=&#34;h5&#34;&gt;H5&lt;/h5&gt;
+&lt;h6 id=&#34;h6&#34;&gt;H6&lt;/h6&gt;</description>
+        </item>
+        <item>
+        <title>一个github搭建多个博客</title>
         <link>https://cheneycqg.github.io/post/buildsite/</link>
         <pubDate>Sat, 05 Aug 2023 00:00:00 +0000</pubDate>
         
@@ -78,82 +154,6 @@
 &lt;p&gt;记得修改&lt;code&gt;settings&lt;/code&gt;中的&lt;code&gt;pages&lt;/code&gt;的&lt;code&gt;branch&lt;/code&gt;也要改为&lt;code&gt;master&lt;/code&gt;否则最后页面是加载不出来的。选好之后要点击&lt;code&gt;save&lt;/code&gt;。&lt;/p&gt;
 &lt;h1 id=&#34;配置hugo&#34;&gt;配置HUGO&lt;/h1&gt;
 &lt;p&gt;​和第一次搭建一样了。&lt;/p&gt;</description>
-        </item>
-        <item>
-        <title>一个github搭建多个博客</title>
-        <link>https://cheneycqg.github.io/post/markdown-syntax-%E5%89%AF%E6%9C%AC/</link>
-        <pubDate>Sat, 05 Aug 2023 00:00:00 +0000</pubDate>
-        
-        <guid>https://cheneycqg.github.io/post/markdown-syntax-%E5%89%AF%E6%9C%AC/</guid>
-        <description>&lt;img src="https://cheneycqg.github.io/post/markdown-syntax-%E5%89%AF%E6%9C%AC/1.jpg" alt="Featured image of post 一个github搭建多个博客" /&gt;&lt;p&gt;在已经有了一个以&lt;code&gt;username.github.io&lt;/code&gt;的博客后，再建立多个个人博客。&lt;/p&gt;
-&lt;h2 id=&#34;github&#34;&gt;github&lt;/h2&gt;
-&lt;p&gt;登录上自己的github，打开名字为&lt;code&gt;username&lt;/code&gt;的仓库。
-按如下图点击&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://cheneycqg.github.io/post/markdown-syntax-%E5%89%AF%E6%9C%AC/2.jpg&#34;
-	width=&#34;1920&#34;
-	height=&#34;885&#34;
-	srcset=&#34;https://cheneycqg.github.io/post/markdown-syntax-%E5%89%AF%E6%9C%AC/2_huf32e8404b7ccf12247fee18bf3e618e4_114754_480x0_resize_q75_box.jpg 480w, https://cheneycqg.github.io/post/markdown-syntax-%E5%89%AF%E6%9C%AC/2_huf32e8404b7ccf12247fee18bf3e618e4_114754_1024x0_resize_q75_box.jpg 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;2&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;216&#34;
-		data-flex-basis=&#34;520px&#34;
-	
-&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://cheneycqg.github.io/post/markdown-syntax-%E5%89%AF%E6%9C%AC/3.jpg&#34;
-	width=&#34;1920&#34;
-	height=&#34;885&#34;
-	srcset=&#34;https://cheneycqg.github.io/post/markdown-syntax-%E5%89%AF%E6%9C%AC/3_hu5c343d704f24c919cbdcc50d2daaa5a4_103855_480x0_resize_q75_box.jpg 480w, https://cheneycqg.github.io/post/markdown-syntax-%E5%89%AF%E6%9C%AC/3_hu5c343d704f24c919cbdcc50d2daaa5a4_103855_1024x0_resize_q75_box.jpg 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;3&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;216&#34;
-		data-flex-basis=&#34;520px&#34;
-	
-&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://cheneycqg.github.io/post/markdown-syntax-%E5%89%AF%E6%9C%AC/4.jpg&#34;
-	width=&#34;1920&#34;
-	height=&#34;885&#34;
-	srcset=&#34;https://cheneycqg.github.io/post/markdown-syntax-%E5%89%AF%E6%9C%AC/4_hu5e2db98108b178e2c939a7c270516ff8_199836_480x0_resize_q75_box.jpg 480w, https://cheneycqg.github.io/post/markdown-syntax-%E5%89%AF%E6%9C%AC/4_hu5e2db98108b178e2c939a7c270516ff8_199836_1024x0_resize_q75_box.jpg 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;4&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;216&#34;
-		data-flex-basis=&#34;520px&#34;
-	
-&gt;&lt;/p&gt;
-&lt;h1 id=&#34;配置repositories&#34;&gt;配置repositories&lt;/h1&gt;
-&lt;p&gt;建好之后，点击&lt;code&gt;repositories&lt;/code&gt;建一个新仓库&lt;img src=&#34;https://cheneycqg.github.io/post/markdown-syntax-%E5%89%AF%E6%9C%AC/5.jpg&#34;
-	width=&#34;1089&#34;
-	height=&#34;834&#34;
-	srcset=&#34;https://cheneycqg.github.io/post/markdown-syntax-%E5%89%AF%E6%9C%AC/5_hu125974eecaf8e4a0c10de84a3a7ba7eb_57531_480x0_resize_q75_box.jpg 480w, https://cheneycqg.github.io/post/markdown-syntax-%E5%89%AF%E6%9C%AC/5_hu125974eecaf8e4a0c10de84a3a7ba7eb_57531_1024x0_resize_q75_box.jpg 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;5&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;130&#34;
-		data-flex-basis=&#34;313px&#34;
-	
-&gt;&lt;/p&gt;
-&lt;p&gt;我用的是&lt;code&gt;master&lt;/code&gt;分支，所以我需要建一个&lt;code&gt;master&lt;/code&gt;分支，然后将master设为默认分支。&lt;/p&gt;
-&lt;h2 id=&#34;注意&#34;&gt;注意&lt;/h2&gt;
-&lt;p&gt;记得修改&lt;code&gt;settings&lt;/code&gt;中的&lt;code&gt;pages&lt;/code&gt;的&lt;code&gt;branch&lt;/code&gt;也要改为&lt;code&gt;master&lt;/code&gt;否则最后页面是加载不出来的。选好之后要点击&lt;code&gt;save&lt;/code&gt;。&lt;/p&gt;
-&lt;h3 id=&#34;配置hugo&#34;&gt;配置HUGO&lt;/h3&gt;
-&lt;p&gt;和第一次搭建一样了。&lt;/p&gt;
-&lt;h4 id=&#34;h4&#34;&gt;H4&lt;/h4&gt;
-&lt;h5 id=&#34;h5&#34;&gt;H5&lt;/h5&gt;
-&lt;h6 id=&#34;h6&#34;&gt;H6&lt;/h6&gt;</description>
         </item>
         
     </channel>
