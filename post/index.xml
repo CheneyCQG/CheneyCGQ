@@ -13,7 +13,7 @@
         
         <guid>https://cheneycqg.github.io/post/buildsite/</guid>
         <description>&lt;img src="https://cheneycqg.github.io/post/buildsite/1.jpg" alt="Featured image of post 一个github搭建多个博客" /&gt;&lt;p&gt;在已经有了一个以&lt;code&gt;username.github.io&lt;/code&gt;的博客后，再建立多个个人博客。&lt;/p&gt;
-&lt;h1 id=&#34;github&#34;&gt;github&lt;/h1&gt;
+&lt;p&gt;#github&lt;/p&gt;
 &lt;p&gt;登录上自己的github，打开名字为&lt;code&gt;username&lt;/code&gt;的仓库。
 按如下图点击&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://cheneycqg.github.io/post/buildsite/2.jpg&#34;
@@ -58,7 +58,7 @@
 		data-flex-basis=&#34;520px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h1 id=&#34;配置repositories&#34;&gt;配置repositories&lt;/h1&gt;
+&lt;p&gt;#配置repositories&lt;/p&gt;
 &lt;p&gt;建好之后，点击&lt;code&gt;repositories&lt;/code&gt;建一个新仓库&lt;img src=&#34;https://cheneycqg.github.io/post/buildsite/5.jpg&#34;
 	width=&#34;1089&#34;
 	height=&#34;834&#34;
@@ -74,9 +74,9 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;我用的是&lt;code&gt;master&lt;/code&gt;分支，所以我需要建一个&lt;code&gt;master&lt;/code&gt;分支，然后将master设为默认分支。&lt;/p&gt;
-&lt;h2 id=&#34;注意&#34;&gt;注意&lt;/h2&gt;
+&lt;p&gt;##注意&lt;/p&gt;
 &lt;p&gt;记得修改&lt;code&gt;settings&lt;/code&gt;中的&lt;code&gt;pages&lt;/code&gt;的&lt;code&gt;branch&lt;/code&gt;也要改为&lt;code&gt;master&lt;/code&gt;否则最后页面是加载不出来的。选好之后要点击&lt;code&gt;save&lt;/code&gt;。&lt;/p&gt;
-&lt;h1 id=&#34;配置hugo&#34;&gt;配置HUGO&lt;/h1&gt;
+&lt;p&gt;#配置HUGO&lt;/p&gt;
 &lt;p&gt;和第一次搭建一样了。&lt;/p&gt;</description>
         </item>
         <item>
