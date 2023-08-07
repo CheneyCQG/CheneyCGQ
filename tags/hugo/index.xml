@@ -77,7 +77,9 @@
 &lt;h2 id=&#34;注意&#34;&gt;注意&lt;/h2&gt;
 &lt;p&gt;记得修改&lt;code&gt;settings&lt;/code&gt;中的&lt;code&gt;pages&lt;/code&gt;的&lt;code&gt;branch&lt;/code&gt;也要改为&lt;code&gt;master&lt;/code&gt;否则最后页面是加载不出来的。选好之后要点击&lt;code&gt;save&lt;/code&gt;。&lt;/p&gt;
 &lt;h1 id=&#34;配置hugo&#34;&gt;配置HUGO&lt;/h1&gt;
-&lt;p&gt;和第一次搭建一样了。&lt;/p&gt;</description>
+&lt;p&gt;和第一次搭建一样了。&lt;/p&gt;
+&lt;h3 id=&#34;士大夫&#34;&gt;士大夫&lt;/h3&gt;
+&lt;h3 id=&#34;多个&#34;&gt;多个&lt;/h3&gt;</description>
         </item>
         
     </channel>
