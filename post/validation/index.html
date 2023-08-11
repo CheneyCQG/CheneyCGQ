@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='SpringBoot项目Validation组件&#43;全局异常处理进行各种参数验证问题'>
+<title>SpringBoot项目Validation组件&#43;全局异常处理进行各种参数验证问题</title>
+
+<link rel='canonical' href='https://cheneycqg.github.io/post/validation/'>
+
+<link rel="stylesheet" href="/scss/style.min.83fdf04f357d6c514ee15e600463b045549e8b40c428f14454adecaa742b352f.css"><meta property='og:title' content='SpringBoot项目Validation组件&#43;全局异常处理进行各种参数验证问题'>
+<meta property='og:description' content='SpringBoot项目Validation组件&#43;全局异常处理进行各种参数验证问题'>
+<meta property='og:url' content='https://cheneycqg.github.io/post/validation/'>
+<meta property='og:site_name' content='Cheney Site'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='SpringBoot' /><meta property='article:tag' content='Spring' /><meta property='article:tag' content='java' /><meta property='article:published_time' content='2023-08-06T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-08-06T00:00:00&#43;00:00'/><meta property='og:image' content='https://cheneycqg.github.io/post/validation/1.jpg' />
+<meta name="twitter:title" content="SpringBoot项目Validation组件&#43;全局异常处理进行各种参数验证问题">
+<meta name="twitter:description" content="SpringBoot项目Validation组件&#43;全局异常处理进行各种参数验证问题"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://cheneycqg.github.io/post/validation/1.jpg' />
+    <link rel="shortcut icon" href="/img/avatar.jpg" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu8558358a36cd5b5f5be6e79535866837_28999_300x0_resize_q75_box.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Cheney Site</a></h1>
+            <h2 class="site-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://cheneycqg.github.io/zh-cn/" >中文</option>
+                        
+                            <option value="https://cheneycqg.github.io/ar/" >عربي</option>
+                        
+                            <option value="https://cheneycqg.github.io/" selected></option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么要使用validation组件和valid进行参数验证">为什么要使用Validation组件和@Valid进行参数验证</a></li>
+    <li><a href="#valid的相关注解">@Valid的相关注解</a></li>
+    <li><a href="#使用valid进行参数校验步骤">使用@Valid进行参数校验步骤</a></li>
+    <li><a href="#springboot实战">SpringBoot实战</a>
+      <ul>
+        <li><a href="#valid">@Valid</a></li>
+        <li><a href="#自定义校验">自定义校验</a></li>
+        <li><a href="#异常处理">异常处理</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/validation/">
+                <img src="/post/validation/1_hu7500fd99e82010526cfdd4d08e24518b_948781_800x0_resize_q75_box.jpg"
+                        srcset="/post/validation/1_hu7500fd99e82010526cfdd4d08e24518b_948781_800x0_resize_q75_box.jpg 800w, /post/validation/1_hu7500fd99e82010526cfdd4d08e24518b_948781_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="340" 
+                        loading="lazy"
+                        alt="Featured image of post SpringBoot项目Validation组件&#43;全局异常处理进行各种参数验证问题" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/springboot/" >
+                SpringBoot
+            </a>
+        
+            <a href="/categories/spring/" >
+                Spring
+            </a>
+        
+            <a href="/categories/java/" >
+                java
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/validation/">SpringBoot项目Validation组件&#43;全局异常处理进行各种参数验证问题</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            SpringBoot项目Validation组件&#43;全局异常处理进行各种参数验证问题
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 06, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    2 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>SpringBoot项目Validation组件+全局异常处理进行各种参数验证问题，比如，写登录模块各种条件的判断等等</p>
+<h1 id="springboot">SpringBoot</h1>
+<h2 id="为什么要使用validation组件和valid进行参数验证">为什么要使用Validation组件和@Valid进行参数验证</h2>
+<p>SpringBoot项目中，会经常写接口类，比如：登录或者注册模块会有大量的校验工作。在写接口时经常要写效验请求参数逻辑，这时候我们会常用做法是写大量的 if 与 if else 类似这样的代码来做判断，如下：
+<img src="/post/validation/2.jpg"
+	width="1049"
+	height="261"
+	srcset="/post/validation/2_hufe4874d73f05ef0d0987cf6aad4786d8_31961_480x0_resize_q75_box.jpg 480w, /post/validation/2_hufe4874d73f05ef0d0987cf6aad4786d8_31961_1024x0_resize_q75_box.jpg 1024w"
+	loading="lazy"
+	
+		alt="2"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="401"
+		data-flex-basis="964px"
+	
+></p>
+<p>这样的代码如果按正常代码逻辑来说，是没有什么问题的，不过按优雅来说，简直糟糕透了。不仅不优雅，而且如果存在大量的验证逻辑，这会使代码看起来乱糟糟，大大降低代码可读性，那么有没有更好的方法能够简化这个过程呢？</p>
+<p>答案当然是有，推荐的是使用 @Valid 注解来帮助我们简化验证逻辑。</p>
+<h2 id="valid的相关注解">@Valid的相关注解</h2>
+<p>下面是 @Valid 相关的注解，在实体类中不同的属性上添加不同的注解，就能实现不同数据的效验功能。
+<img src="/post/validation/3.png"
+	width="681"
+	height="549"
+	srcset="/post/validation/3_hub013f0394bfe45497f19d50c43878bfa_80449_480x0_resize_box_3.png 480w, /post/validation/3_hub013f0394bfe45497f19d50c43878bfa_80449_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="3"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="124"
+		data-flex-basis="297px"
+	
+></p>
+<h2 id="使用valid进行参数校验步骤">使用@Valid进行参数校验步骤</h2>
+<p>整个过程如下图所示，用户访问接口，然后进行参数效验，因为 @Valid 不支持平面的参数效验（直接写在参数中字段的效验）所以基于 GET 请求的参数还是按照原先方式进行效验，而 POST 则可以以实体对象为参数，可以使用 @Valid 方式进行效验。如果效验通过，则进入业务逻辑，否则抛出异常，交由全局异常处理器进行处理。</p>
+<h2 id="springboot实战">SpringBoot实战</h2>
+<h3 id="valid">@Valid</h3>
+<h4 id="实体类">实体类</h4>
+<pre><code>	package com.cheney.seckill.vo;
+
+	import com.cheney.seckill.validation.IsMobile;
+	import lombok.AllArgsConstructor;
+	import lombok.Data;
+	import lombok.NoArgsConstructor;
+	import org.hibernate.validator.constraints.Length;
+
+	import javax.validation.constraints.NotNull;
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public class LoginVo {
+
+		@IsMobile(require = true)
+		private String mobile;
+		@NotNull
+		@Length(min = 32,max = 32)
+		private String password;
+	}
+</code></pre>
+<h4 id="controller">Controller</h4>
+<pre><code>	@Controller
+	@RequestMapping(&quot;/login&quot;)
+	public class LoginController {
+		@Autowired
+		private IUserService iUserService;
+		@RequestMapping(&quot;/toLogin&quot;)
+		public String toLogin(){
+    		return &quot;login&quot;;
+		}
+	@RequestMapping(&quot;/doLogin&quot;)
+	@ResponseBody
+	public RespBean doLogin(@Valid LoginVo loginVo, HttpServletRequest request, HttpServletResponse response) throws InterruptedException {
+    	RespBean respBean = iUserService.doLogin(loginVo,request,response);
+    	Thread.sleep(2000);
+    	return respBean;
+		}
+	}
+</code></pre>
+<p>注意： 形参上必须要加@Valid注解</p>
+<h4 id="进行测试">进行测试</h4>
+<h3 id="自定义校验">自定义校验</h3>
+<h4 id="引入validation组件依赖">引入validation组件依赖</h4>
+<pre><code>&lt;!-- validation组件 --&gt; 
+&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-boot-starter-validation&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h4 id="自定义校验注解">自定义校验注解</h4>
+<pre><code>/**
+* 验证手机号
+*/
+@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
+@Retention(RUNTIME)
+@Documented
+@Constraint(validatedBy = {IsMobileValidator.class})
+public @interface IsMobile {
+   boolean required() default true;
+   String message() default &quot;手机号码格式错误&quot;;
+   Class&lt;?&gt;[] groups() default {};
+   Class&lt;? extends Payload&gt;[] payload() default {};
+}
+</code></pre>
+<h4 id="自定义校验注解的校验器">自定义校验注解的校验器</h4>
+<pre><code>/**
+ * 自定义IsMobile注解的校验器
+ */
+public class IsMobileValidator implements ConstraintValidator&lt;IsMobile,String&gt; {
+	private boolean require;
+	@Override
+	public void initialize(IsMobile constraintAnnotation) {
+		require = constraintAnnotation.require();
+	}
+
+	@Override
+	public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
+		//判断require是否符合手机格式
+		if (StringUtils.isEmpty(s)){
+			if (require)
+			//手机号为空。要求必填
+				return false;
+			else
+			//手机号为空，但是我也不要求必填
+				return true;
+		}else {
+			//1手机号不为空
+			return ValidatorUtil.isMobile(s);
+		}
+	}
+}
+</code></pre>
+<h4 id="自定义校验规则">自定义校验规则</h4>
+<pre><code>/**
+* 校验工具类
+*/
+public class ValidatorUtil {
+	private static final Pattern mobile_pattern = Pattern.compile(&quot;[1]([3-9])[0-9]{9}$&quot;);
+    public static boolean isMobile(String mobile){
+  		if (StringUtils.isEmpty(mobile)) {
+ 			return false;
+  		}
+  		Matcher matcher = mobile_pattern.matcher(mobile);
+  		return matcher.matches();
+   }
+}
+</code></pre>
+<h3 id="异常处理">异常处理</h3>
+<ul>
+<li>
+<p>我们知道，系统中异常包括：编译时异常和运行时异常 RuntimeException ，前者通过捕获异常从而获 取异常信息，后者主要通过规范代码开发、测试通过手段减少运行时异常的发生。</p>
+</li>
+<li>
+<p>在开发中，不管是 dao层、service层还是controller层，都有可能抛出异常，在Springmvc中，能将所有类型的异常处理,从各处理过程解耦出来，既保证了相关处理过程的功能较单一，也实现了异常信息的统一处理和维护。</p>
+</li>
+</ul>
+<p><strong>SpringBoot全局异常处理方式主要两种：</strong></p>
+<ul>
+<li>使用 @ControllerAdvice 和 @ExceptionHandler 注解。</li>
+<li>使用 ErrorController类 来实现</li>
+</ul>
+<p><strong>区别：</strong></p>
+<ul>
+<li>
+<p>@ControllerAdvice 方式只能处理控制器抛出的异常。此时请求已经进入控制器中。</p>
+</li>
+<li>
+<p>ErrorController类 方式可以处理所有的异常，包括未进入控制器的错误，比如404,401等错误</p>
+</li>
+<li>
+<p>如果应用中两者共同存在，则 @ControllerAdvice 方式处理控制器抛出的异常,ErrorController类 方式处理未进入控制器的异常。</p>
+</li>
+<li>
+<p>@ControllerAdvice 方式可以定义多个拦截方法，拦截不同的异常类，并且可以获取抛出的异常 信息，自由度更大。</p>
+</li>
+</ul>
+<h4 id="globalexception"><strong>GlobalException</strong></h4>
+<pre><code>/**
+ * 自定义全局异常
+ * 我们抛出的所有异常都是该异常
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class GlobalException extends RuntimeException{
+	private RespBeanEnum respBeanEnum;
+}
+</code></pre>
+<h4 id="globalexceptionhandler"><strong>GlobalExceptionHandler</strong></h4>
+<pre><code>/**
+ * 全局异常处理器
+ */
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+@ExceptionHandler(value = Exception.class)
+public RespBean handler(Exception e) throws Exception {
+	//将异常转换为RespBean对象
+	//异常有很多种。可能是自己的异常，可能是系统的等等
+	if (e instanceof GlobalException){
+		GlobalException ge = (GlobalException) e;
+		return RespBean.error(ge.getRespBeanEnum());
+	}else if (e instanceof BindException){
+		BindException be = (BindException) e;
+		String msg = be.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+		return new RespBean(500502L,msg,null);
+	}else {
+		//throw e;
+		return RespBean.error(RespBeanEnum.ERROR);
+	}
+}
+}
+</code></pre>
+<p>这样就可以省去各种健壮性判断，并且通过全局异常来前端异常提示，而不是一个异常页面。但是对开发中调试bug不太友好，因为没有异常信息。</p>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/springboot/">SpringBoot</a>
+        
+            <a href="/tags/spring/">Spring</a>
+        
+            <a href="/tags/java/">java</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css"integrity="sha256-J&#43;iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s="crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js"integrity="sha256-InsNdER1b2xUewP&#43;pKCUJpkhiqwHgqiPXDlIk7GzBu4="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js"integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI="crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/objectmapper/">
+        
+        
+            <div class="article-image">
+                <img src="/post/objectmapper/_hu51c512477db83c60854cdbedad5439b5_362413_0e9cdffc2eebbb53f5198cdd4990c953.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post ObjectMapper不要一直new啦！！！"
+                        
+                        data-hash="md5-JWjsh/O3aQ8AlFfaNL5UbA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">ObjectMapper不要一直new啦！！！</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2023 Cheney Site
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.17.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+    </body>
+</html>
