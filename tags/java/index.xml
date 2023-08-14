@@ -12,7 +12,7 @@
         <pubDate>Mon, 14 Aug 2023 00:00:00 +0000</pubDate>
         
         <guid>https://cheneycqg.github.io/post/handlermethodargumentresolver/</guid>
-        <description>&lt;img src="https://cheneycqg.github.io/1.jpg" alt="Featured image of post 自定义参数解析器，通过SpringMVC自动注入，判断频繁验证问题！如：用户是否登录问题" /&gt;&lt;p&gt;自定义参数解析器，通过SpringMVC自动注入，判断频繁验证问题！如：用户是否登录问题&lt;/p&gt;
+        <description>&lt;img src="https://cheneycqg.github.io/post/handlermethodargumentresolver/1.png" alt="Featured image of post 自定义参数解析器，通过SpringMVC自动注入，判断频繁验证问题！如：用户是否登录问题" /&gt;&lt;p&gt;自定义参数解析器，通过SpringMVC自动注入，判断频繁验证问题！如：用户是否登录问题&lt;/p&gt;
 &lt;h1 id=&#34;springboot&#34;&gt;SpringBoot&lt;/h1&gt;
 &lt;h2 id=&#34;参数解析器介绍&#34;&gt;参数解析器介绍&lt;/h2&gt;
 &lt;p&gt;参数解析器属于spring-web包中提供的组件，springmvc框架中对应提供了很多参数解析器。例如我们开发的Controller代码如下：&lt;/p&gt;
