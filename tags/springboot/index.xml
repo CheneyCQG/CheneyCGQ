@@ -6,7 +6,154 @@
         <description>Recent content in SpringBoot on Cheney Site</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Sun, 06 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://cheneycqg.github.io/tags/springboot/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 14 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://cheneycqg.github.io/tags/springboot/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>自定义参数解析器，通过SpringMVC自动注入，判断频繁验证问题！如：用户是否登录问题</title>
+        <link>https://cheneycqg.github.io/post/handlermethodargumentresolver/</link>
+        <pubDate>Mon, 14 Aug 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://cheneycqg.github.io/post/handlermethodargumentresolver/</guid>
+        <description>&lt;img src="https://cheneycqg.github.io/1.jpg" alt="Featured image of post 自定义参数解析器，通过SpringMVC自动注入，判断频繁验证问题！如：用户是否登录问题" /&gt;&lt;p&gt;自定义参数解析器，通过SpringMVC自动注入，判断频繁验证问题！如：用户是否登录问题&lt;/p&gt;
+&lt;h1 id=&#34;springboot&#34;&gt;SpringBoot&lt;/h1&gt;
+&lt;h2 id=&#34;参数解析器介绍&#34;&gt;参数解析器介绍&lt;/h2&gt;
+&lt;p&gt;参数解析器属于spring-web包中提供的组件，springmvc框架中对应提供了很多参数解析器。例如我们开发的Controller代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@RestController
+@RequestMapping(&amp;quot;/user&amp;quot;)
+public class UserController{
+	@PostMapping(&amp;quot;/save&amp;quot;)
+	//此处request对象就是通过Springmvc提供的参数解析器帮我们注入的
+	public String saveUser(HttpServletRequest request){
+    	return &amp;quot;success&amp;quot;;
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在上面的saveUser方法中，我们声明了一个类型为HttpServletRequest的参数，这个对象就是通过springmvc提供的ServletRequestMethodArgumentResolver这个参数解析器帮我们注入的。同样如果我们需要使用HttpServletResponse对象，也可以直接在方法上加入这个参数即可，此时springmvc会通过ServletResponseMethodArgumentResolver这个参数解析器帮我们注入。&lt;/p&gt;
+&lt;p&gt;在项目开发中我们也可以根据需要自定义参数解析器，需要实现HandlerMethodArgumentResolver接口：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public interface HandlerMethodArgumentResolver {
+	boolean supportsParameter(MethodParameter var1);
+
+	@Nullable
+	Object resolveArgument(MethodParameter var1, 
+                        @Nullable ModelAndViewContainer var2, 
+                        NativeWebRequest var3, 
+                        @Nullable WebDataBinderFactory var4) throws Exception;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可以看到此接口包含两个接口方法：supportsParameter和resolveArgument。&lt;/p&gt;
+&lt;p&gt;当supportsParameter方法返回true时，才会调用resolveArgument方法。&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;http://t.csdn.cn/xtvDj&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;自定义参数解析器的使用总结&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;springboot实战&#34;&gt;SpringBoot实战&lt;/h2&gt;
+&lt;h3 id=&#34;案例goodscontroller判断用户是否登录&#34;&gt;案例：GoodsController判断用户是否登录&lt;/h3&gt;
+&lt;h4 id=&#34;实体类&#34;&gt;实体类&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;@Data
+@EqualsAndHashCode(callSuper = false)
+@TableName(&amp;quot;t_user&amp;quot;)
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
+    /**
+     * 用户ID,手机号码
+     */
+    private Long id;	
+    private String nickname;	
+    /**
+     * MD5(MD5(pass明文+固定salt)+salt)
+     */
+    private String password;
+
+    private String salt;
+    /**
+     * 头像
+     */
+    private String head;	
+    /**
+     * 注册时间
+     */
+    private Date registerDate;	
+    /**
+     * 最后一次登录事件
+     */
+    private Date lastLoginDate;	
+    /**
+     * 登录次数
+     */
+    private Integer loginCount;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;controller&#34;&gt;Controller&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;@Controller
+@RequestMapping(&amp;quot;/goods&amp;quot;)
+public class GoodsController {
+    @Autowired
+    private ISeckillGoodsService iSeckillGoodsService;
+    @Autowired
+    private RedisTemplate&amp;lt;String,Object&amp;gt; redisTemplate;
+    @RequestMapping(&amp;quot;/toList&amp;quot;)
+    public String toList(User user, Model model, HttpServletRequest request){
+        //1判断用户是否登录
+        if (user == null)
+            return &amp;quot;login&amp;quot;;
+        model.addAttribute(&amp;quot;user&amp;quot;,user);
+        //2查询所有秒杀商品信息
+        List&amp;lt;SeckillGoodsVo&amp;gt; list = iSeckillGoodsService.tolist();
+        model.addAttribute(&amp;quot;goodsVoList&amp;quot;,list);
+        return &amp;quot;goodsList&amp;quot;;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在形参上写上User，这样SpringMVC就可以自动注入，将验证后的User返回，只需要判断User是否为null即可。&lt;/p&gt;
+&lt;h4 id=&#34;引入依赖&#34;&gt;引入依赖&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
+	&amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;
+	&amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;自定义mvcconfig实现webmvcconfigurer接口&#34;&gt;自定义MVCConfig实现WebMvcConfigurer接口&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;@Component
+public class MVCConfig implements WebMvcConfigurer {
+	@Autowired
+	private UserArgumentResolver userArgumentResolver;
+	/**
+ 	* SpringMVC 提供的Controller的参数解析器
+ 	* @param resolvers
+ 	*/
+	@Override
+	public void addArgumentResolvers(List&amp;lt;HandlerMethodArgumentResolver&amp;gt; resolvers) {
+    	boolean add = resolvers.add(userArgumentResolver);
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;实现WebMvcConfigurer接口，重写addArgumentResolvers方法，就可以将自定义的参数解析器注入&lt;/p&gt;
+&lt;h4 id=&#34;自定义userargumentresolver实现handlermethodargumentresolver接口&#34;&gt;自定义UserArgumentResolver实现HandlerMethodArgumentResolver接口&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;@Component
+public class UserArgumentResolver implements HandlerMethodArgumentResolver {
+    @Autowired
+    private RedisTemplate&amp;lt;String,Object&amp;gt; redisTemplate;
+    @Override
+    public boolean supportsParameter(MethodParameter parameter) {
+        return parameter.getParameterType() == User.class;
+    }
+
+    @Override
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+        HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
+        String uuid = CookieUtil.getCookieValue(request, &amp;quot;token&amp;quot;);
+        if (StringUtils.isEmpty(uuid)){
+            return null;
+        }
+	//        Object users = request.getSession().getAttribute(uuid);
+	//        if (users == null)
+	//            return &amp;quot;login&amp;quot;;
+    	String userJson = (String) redisTemplate.opsForValue().get(&amp;quot;user:uuid:&amp;quot; + uuid);
+    	if (userJson == null)
+        	return null;
+    	User user = JsonUtil.jsonStr2Object(userJson, User.class);
+    	return user;
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;最后将判断后的User返回，Controller中就可以拿到判断后的User了。&lt;/p&gt;</description>
+        </item>
+        <item>
         <title>SpringBoot项目Validation组件&#43;全局异常处理进行各种参数验证问题</title>
         <link>https://cheneycqg.github.io/post/validation/</link>
         <pubDate>Sun, 06 Aug 2023 00:00:00 +0000</pubDate>
