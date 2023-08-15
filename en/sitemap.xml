@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://cheneycqg.github.io/</loc>
-    <lastmod>2023-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-15T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -20,8 +20,14 @@
                 href="https://cheneycqg.github.io/"
                 />
   </url><url>
+    <loc>https://cheneycqg.github.io/tags/cache/</loc>
+    <lastmod>2023-08-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://cheneycqg.github.io/categories/cache/</loc>
+    <lastmod>2023-08-15T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://cheneycqg.github.io/categories/</loc>
-    <lastmod>2023-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-15T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -39,13 +45,13 @@
                 />
   </url><url>
     <loc>https://cheneycqg.github.io/tags/java/</loc>
-    <lastmod>2023-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cheneycqg.github.io/categories/java/</loc>
-    <lastmod>2023-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cheneycqg.github.io/post/</loc>
-    <lastmod>2023-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-15T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -63,25 +69,25 @@
                 />
   </url><url>
     <loc>https://cheneycqg.github.io/tags/spring/</loc>
-    <lastmod>2023-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cheneycqg.github.io/categories/spring/</loc>
-    <lastmod>2023-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cheneycqg.github.io/tags/springboot/</loc>
-    <lastmod>2023-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cheneycqg.github.io/categories/springboot/</loc>
-    <lastmod>2023-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cheneycqg.github.io/tags/springmvc/</loc>
-    <lastmod>2023-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cheneycqg.github.io/categories/springmvc/</loc>
-    <lastmod>2023-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cheneycqg.github.io/tags/</loc>
-    <lastmod>2023-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-15T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -97,6 +103,12 @@
                 hreflang="zh-cn"
                 href="https://cheneycqg.github.io/tags/"
                 />
+  </url><url>
+    <loc>https://cheneycqg.github.io/post/cacheconsistencyissues/</loc>
+    <lastmod>2023-08-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://cheneycqg.github.io/post/pagecachebythymelaefviewresolver/</loc>
+    <lastmod>2023-08-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cheneycqg.github.io/post/handlermethodargumentresolver/</loc>
     <lastmod>2023-08-14T00:00:00+00:00</lastmod>

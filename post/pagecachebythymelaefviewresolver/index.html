@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='页面缓存：通过ThymeleafViewResolver实现页面缓存'>
+<title>页面缓存：通过ThymeleafViewResolver实现页面缓存</title>
+
+<link rel='canonical' href='https://cheneycqg.github.io/post/pagecachebythymelaefviewresolver/'>
+
+<link rel="stylesheet" href="/scss/style.min.83fdf04f357d6c514ee15e600463b045549e8b40c428f14454adecaa742b352f.css"><meta property='og:title' content='页面缓存：通过ThymeleafViewResolver实现页面缓存'>
+<meta property='og:description' content='页面缓存：通过ThymeleafViewResolver实现页面缓存'>
+<meta property='og:url' content='https://cheneycqg.github.io/post/pagecachebythymelaefviewresolver/'>
+<meta property='og:site_name' content='Cheney Site'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='SpringBoot' /><meta property='article:tag' content='Spring' /><meta property='article:tag' content='SpringMVC' /><meta property='article:tag' content='java' /><meta property='article:tag' content='Cache' /><meta property='article:published_time' content='2023-08-15T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-08-15T00:00:00&#43;00:00'/><meta property='og:image' content='https://cheneycqg.github.io/post/pagecachebythymelaefviewresolver/1.jpg' />
+<meta name="twitter:title" content="页面缓存：通过ThymeleafViewResolver实现页面缓存">
+<meta name="twitter:description" content="页面缓存：通过ThymeleafViewResolver实现页面缓存"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://cheneycqg.github.io/post/pagecachebythymelaefviewresolver/1.jpg' />
+    <link rel="shortcut icon" href="/img/avatar.jpg" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu8558358a36cd5b5f5be6e79535866837_28999_300x0_resize_q75_box.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Cheney Site</a></h1>
+            <h2 class="site-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://cheneycqg.github.io/zh-cn/" >中文</option>
+                        
+                            <option value="https://cheneycqg.github.io/ar/" >عربي</option>
+                        
+                            <option value="https://cheneycqg.github.io/" selected></option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#thymeleafviewresolver">ThymeleafViewResolver</a>
+      <ul>
+        <li><a href="#viewresolver的作用"><strong>ViewResolver的作用</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#springboot实战">SpringBoot实战</a>
+      <ul>
+        <li><a href="#案例goodscontroller商品页面的并发访问">案例：GoodsController商品页面的并发访问</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/pagecachebythymelaefviewresolver/">
+                <img src="/post/pagecachebythymelaefviewresolver/1_hu1b7e29d306bb64b66f5e9fa19812dd6f_713543_800x0_resize_q75_box.jpg"
+                        srcset="/post/pagecachebythymelaefviewresolver/1_hu1b7e29d306bb64b66f5e9fa19812dd6f_713543_800x0_resize_q75_box.jpg 800w, /post/pagecachebythymelaefviewresolver/1_hu1b7e29d306bb64b66f5e9fa19812dd6f_713543_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="337" 
+                        loading="lazy"
+                        alt="Featured image of post 页面缓存：通过ThymeleafViewResolver实现页面缓存" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/springboot/" >
+                SpringBoot
+            </a>
+        
+            <a href="/categories/spring/" >
+                Spring
+            </a>
+        
+            <a href="/categories/springmvc/" >
+                SpringMVC
+            </a>
+        
+            <a href="/categories/java/" >
+                java
+            </a>
+        
+            <a href="/categories/cache/" >
+                Cache
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/pagecachebythymelaefviewresolver/">页面缓存：通过ThymeleafViewResolver实现页面缓存</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            页面缓存：通过ThymeleafViewResolver实现页面缓存
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 15, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>页面缓存：通过ThymeleafViewResolver实现页面缓存,一些高并发的页面可以将整个页面存到缓存中这样就可以不用每次都从数据库查询，解决高并发问题。</p>
+<h1 id="cache">Cache</h1>
+<h2 id="thymeleafviewresolver">ThymeleafViewResolver</h2>
+<p>各类前端模板引擎的页面展示，发现它们的共性时，都实现了ViewResolver接口，并将实现类注入到Spring容器当中。
+以Thymeleaf为例，在它的自动配置类中实现如下：</p>
+<pre><code>@Bean
+@ConditionalOnMissingBean(name = &quot;thymeleafViewResolver&quot;)
+ThymeleafViewResolver thymeleafViewResolver(ThymeleafProperties properties,
+	SpringTemplateEngine templateEngine) {
+	ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+	// ...
+	return resolver;
+}
+</code></pre>
+<p>很明显它定义了ThymeleafViewResolver，而该类最终也是实现了ViewResolver接口。
+本篇文章就带大家了解一下ViewResolver的功能和在SpringBoot中如何自定义。</p>
+<h3 id="viewresolver的作用"><strong>ViewResolver的作用</strong></h3>
+<p>ViewResolver的作用就是通过解析ModelAndView，将ModelAndView中的逻辑视图名映射为View对象，并将ModelAndView中的Model取出。</p>
+<p>View在获取到ViewResolver传递的View和Model时，对Model进行渲染，通过View对象找到要展示给用户的物理视图，将渲染后的视图展示给用户。直白的说将就是将数据通过request存储起来，存放在展示给用户的页面中，并将页面呈现给用户。</p>
+<p>实例化的ViewResolver存储在DispatcherServlet的List<!-- raw HTML omitted --></p>
+<p>该段参考于</p>
+<p><a class="link" href="http://t.csdn.cn/lHtK5"  target="_blank" rel="noopener"
+    >SpringBoot2.x系列教程（三十五）SpringMVC之ViewResolver及扩展</a></p>
+<h2 id="springboot实战">SpringBoot实战</h2>
+<h3 id="案例goodscontroller商品页面的并发访问">案例：GoodsController商品页面的并发访问</h3>
+<h4 id="页面缓存之前goodscontroller">页面缓存之前GoodsController</h4>
+<pre><code>@Controller
+@RequestMapping(&quot;/goods&quot;)
+public class GoodsController {
+    @Autowired
+    private ISeckillGoodsService iSeckillGoodsService;
+
+    @Autowired
+    private RedisTemplate&lt;String,Object&gt; redisTemplate;
+
+    @Autowired
+    private ThymeleafViewResolver thymeleafViewResolver;
+	@RequestMapping(&quot;/toList&quot;)
+	public String toList(User user, Model model, HttpServletRequest request){
+		//1判断用户是否登录
+        if (user == null)
+            return &quot;login&quot;;
+        model.addAttribute(&quot;user&quot;,user);
+        //2查询所有秒杀商品信息
+        List&lt;SeckillGoodsVo&gt; list = iSeckillGoodsService.tolist();
+        model.addAttribute(&quot;goodsVoList&quot;,list);
+        return &quot;goodsList&quot;;
+	}
+}
+</code></pre>
+<p><strong>使用Jmeter压测结果</strong>
+<img src="/post/pagecachebythymelaefviewresolver/2.jpg"
+	width="1535"
+	height="865"
+	srcset="/post/pagecachebythymelaefviewresolver/2_hu61758a095ca1a9411b2f30fa4171edba_61649_480x0_resize_q75_box.jpg 480w, /post/pagecachebythymelaefviewresolver/2_hu61758a095ca1a9411b2f30fa4171edba_61649_1024x0_resize_q75_box.jpg 1024w"
+	loading="lazy"
+	
+		alt="2"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="177"
+		data-flex-basis="425px"
+	
+>
+<img src="/post/pagecachebythymelaefviewresolver/3.jpg"
+	width="1510"
+	height="250"
+	srcset="/post/pagecachebythymelaefviewresolver/3_hu0dfff04a8c8828c7aa9faf8c1468429b_25600_480x0_resize_q75_box.jpg 480w, /post/pagecachebythymelaefviewresolver/3_hu0dfff04a8c8828c7aa9faf8c1468429b_25600_1024x0_resize_q75_box.jpg 1024w"
+	loading="lazy"
+	
+		alt="3"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="604"
+		data-flex-basis="1449px"
+	
+>
+<img src="/post/pagecachebythymelaefviewresolver/4.jpg"
+	width="1508"
+	height="229"
+	srcset="/post/pagecachebythymelaefviewresolver/4_hu6ba576296ddb35f4841cbff7572d36ba_23580_480x0_resize_q75_box.jpg 480w, /post/pagecachebythymelaefviewresolver/4_hu6ba576296ddb35f4841cbff7572d36ba_23580_1024x0_resize_q75_box.jpg 1024w"
+	loading="lazy"
+	
+		alt="4"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="658"
+		data-flex-basis="1580px"
+	
+>
+<img src="/post/pagecachebythymelaefviewresolver/5.jpg"
+	width="1519"
+	height="223"
+	srcset="/post/pagecachebythymelaefviewresolver/5_hu85e88aafd166188f4c13026cea0203bb_23480_480x0_resize_q75_box.jpg 480w, /post/pagecachebythymelaefviewresolver/5_hu85e88aafd166188f4c13026cea0203bb_23480_1024x0_resize_q75_box.jpg 1024w"
+	loading="lazy"
+	
+		alt="5"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="681"
+		data-flex-basis="1634px"
+	
+>
+<strong>吞吐量在1400左右</strong></p>
+<h4 id="页面缓存之后goodscontroller">页面缓存之后GoodsController</h4>
+<pre><code>@Controller
+@RequestMapping(&quot;/goods&quot;)
+public class GoodsController {
+    @Autowired
+    private ISeckillGoodsService iSeckillGoodsService;
+
+    @Autowired
+    private RedisTemplate&lt;String,Object&gt; redisTemplate;
+
+    @Autowired
+    private ThymeleafViewResolver thymeleafViewResolver;
+
+	@RequestMapping(&quot;/toList&quot;)
+	@ResponseBody
+	public String toList2(User user, Model model, HttpServletRequest request, HttpServletResponse response){
+        //1.判断用户是否登录
+        if (user == null)
+            throw new GlobalException(RespBeanEnum.LOGIN_NOT_LOGIN);
+        //2.从redis中取出页面缓存
+        String html = (String) redisTemplate.opsForValue().get(&quot;goodsList&quot;);
+        if (!StringUtils.isEmpty(html)) {
+            return html;
+        }
+
+        model.addAttribute(&quot;user&quot;,user);
+        //2查询所有秒杀商品信息
+        List&lt;SeckillGoodsVo&gt; list = iSeckillGoodsService.tolist();
+        model.addAttribute(&quot;goodsVoList&quot;,list);
+        //ViewResolver把数据糅合到一起
+        //ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
+        //需要一个web的上下文
+        WebContext webContext = new WebContext(request,response,request.getServletContext(),request.getLocale(),model.asMap());
+        //需要WebContext参数
+        html = thymeleafViewResolver.getTemplateEngine().process(&quot;goodsList&quot;,webContext);
+        //3.保存到redis
+        redisTemplate.opsForValue().set(&quot;goodsList&quot;,html,60, TimeUnit.SECONDS);
+        return html;
+	}
+}
+</code></pre>
+<p><strong>使用Jmeter压测结果</strong>
+<img src="/post/pagecachebythymelaefviewresolver/2.jpg"
+	width="1535"
+	height="865"
+	srcset="/post/pagecachebythymelaefviewresolver/2_hu61758a095ca1a9411b2f30fa4171edba_61649_480x0_resize_q75_box.jpg 480w, /post/pagecachebythymelaefviewresolver/2_hu61758a095ca1a9411b2f30fa4171edba_61649_1024x0_resize_q75_box.jpg 1024w"
+	loading="lazy"
+	
+		alt="2"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="177"
+		data-flex-basis="425px"
+	
+>
+<img src="/post/pagecachebythymelaefviewresolver/6.jpg"
+	width="1505"
+	height="259"
+	srcset="/post/pagecachebythymelaefviewresolver/6_hued58b9889fe3f3fd5d047d7dcdbf512f_23083_480x0_resize_q75_box.jpg 480w, /post/pagecachebythymelaefviewresolver/6_hued58b9889fe3f3fd5d047d7dcdbf512f_23083_1024x0_resize_q75_box.jpg 1024w"
+	loading="lazy"
+	
+		alt="6"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="581"
+		data-flex-basis="1394px"
+	
+>
+<img src="/post/pagecachebythymelaefviewresolver/7.jpg"
+	width="1513"
+	height="243"
+	srcset="/post/pagecachebythymelaefviewresolver/7_hu3dffa7d3c6e893e93b05c8628385aa9b_21756_480x0_resize_q75_box.jpg 480w, /post/pagecachebythymelaefviewresolver/7_hu3dffa7d3c6e893e93b05c8628385aa9b_21756_1024x0_resize_q75_box.jpg 1024w"
+	loading="lazy"
+	
+		alt="7"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="622"
+		data-flex-basis="1494px"
+	
+>
+<img src="/post/pagecachebythymelaefviewresolver/8.jpg"
+	width="1504"
+	height="251"
+	srcset="/post/pagecachebythymelaefviewresolver/8_hu033f8d40802776604b016cdafc4c2d24_23642_480x0_resize_q75_box.jpg 480w, /post/pagecachebythymelaefviewresolver/8_hu033f8d40802776604b016cdafc4c2d24_23642_1024x0_resize_q75_box.jpg 1024w"
+	loading="lazy"
+	
+		alt="8"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="599"
+		data-flex-basis="1438px"
+	
+>
+<strong>吞吐量在3000-5000</strong></p>
+<p>明显能够看出页面缓存之后，并发效率的提高。</p>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/springboot/">SpringBoot</a>
+        
+            <a href="/tags/spring/">Spring</a>
+        
+            <a href="/tags/springmvc/">SpringMVC</a>
+        
+            <a href="/tags/java/">java</a>
+        
+            <a href="/tags/cache/">Cache</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css"integrity="sha256-J&#43;iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s="crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js"integrity="sha256-InsNdER1b2xUewP&#43;pKCUJpkhiqwHgqiPXDlIk7GzBu4="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js"integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI="crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/cacheconsistencyissues/">
+        
+        
+            <div class="article-image">
+                <img src="/post/cacheconsistencyissues/1.094bfee94778b5fc9ae8b37048553593_hu5e034b6e55d7fb3e70f8b9599cb4e80f_521165_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 对象缓存：缓存一致性问题"
+                        
+                        data-hash="md5-CUv&#43;6Ud4tfya6LNwSFU1kw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">对象缓存：缓存一致性问题</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/handlermethodargumentresolver/">
+        
+        
+            <div class="article-image">
+                <img src="/post/handlermethodargumentresolver/1.4cd00ce36727e1b2aef6c250c35f5743_huade970bab143261c9dc0e5174569794b_669800_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 自定义参数解析器，通过SpringMVC自动注入，判断频繁验证问题！如：用户是否登录问题"
+                        
+                        data-hash="md5-TNAM42cn4bKu9sJQw19XQw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">自定义参数解析器，通过SpringMVC自动注入，判断频繁验证问题！如：用户是否登录问题</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/validation/">
+        
+        
+            <div class="article-image">
+                <img src="/post/validation/1.589f75f3cf275db41ba46375aab2d440_hu8d877cba090037d2599dd0d3c9668b6a_888400_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post SpringBoot项目Validation组件&#43;全局异常处理进行各种参数验证问题"
+                        
+                        data-hash="md5-WJ91888nXbQbpGN1qrLUQA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SpringBoot项目Validation组件&#43;全局异常处理进行各种参数验证问题</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/javacollectioncontainerinterviewquestions/">
+        
+        
+            <div class="article-image">
+                <img src="/post/javacollectioncontainerinterviewquestions/1.c3814bb71638f22312a61264c2f19514_hu453799ef81e36c9b33c0260d17039d5c_702958_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 02Java集合容器面试题"
+                        
+                        data-hash="md5-w4FLtxY48iMSphJkwvGVFA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">02Java集合容器面试题</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/javabasicinterviewquestions/">
+        
+        
+            <div class="article-image">
+                <img src="/post/javabasicinterviewquestions/1.ae1534f0d4bfabf22439a078d55b457e_huc00eae3e0c0cdf78883d3bab0896d007_546568_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 01Java基础知识面试题"
+                        
+                        data-hash="md5-rhU08NS/q/IkOaB41VtFfg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">01Java基础知识面试题</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2023 Cheney Site
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.17.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/ribbon.min.js"
+    integrity="sha384-UEK8ZiP3VgFNP8KnKMKDmd4pAUAOJ59Y2Jo3ED2Z5qKQf6HLHovMxq7Beb9CLPUe"
+    crossorigin="anonymous"
+    size="300"
+    alpha="0.6"
+    zindex="-1"
+    defer
+></script>
+
+<script
+    src="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/js/nprogress.min.js"
+    integrity="sha384-bHDlAEUFxsRI7JfULv3DTpL2IXbbgn4JHQJibgo5iiXSK6Iu8muwqHANhun74Cqg"
+    crossorigin="anonymous"
+></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/zhixuan2333/gh-blog@v0.1.0/css/nprogress.css"
+    integrity="sha384-KJyhr2syt5+4M9Pz5dipCvTrtvOmLk/olWVdfhAp858UCa64Ia5GFpTN7+G4BWpE"
+    crossorigin="anonymous"
+/>
+<script>
+    NProgress.start();
+    document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") NProgress.inc(0.8);
+        if (document.readyState === "complete") NProgress.done();
+    });
+</script>
+    </body>
+</html>
