@@ -1,57 +1,19 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='学习目标
-掌握RestTemplate的使用 知道什么是SpringCloud 掌握搭建Eureka注册中心 了解Ribbon的负载均衡 理解Hystrix的熔断原理 系统架构演变 ​	随着互联网的发展，网站应用的规模不断扩大。需求的激增，带来的是技术上的压力。系统架构也因此也不断的演进、升级、迭代。从单一应用，到垂直拆分，到分布式服务，到SOA，以及现在火热的微服务架构，还有Google带领下来势汹涌的Service Mesh。我们到底是该乘坐微服务的船只驶向远方，还是偏安一隅得过且过？ ​	其实生活不止眼前的苟且，还有诗和远方。所以我们今天就回顾历史，看一看系统架构演变的历程；把握现在，学习现在最火的技术架构；展望未来，争取成为一名优秀的Java工程师。
-1.1 单体架构 ​	当网站流量很小时，只需一个应用，将所有功能都部署在一起，以减少部署节点和成本。单体架构就是将所有的功能、数据库、文件都部署在一台机器上，俗称All-In-One
-1.2 单体集群 单体集群,就是将单体架构复制几份
-1.3 分布式服务 分布式,是指将整个系统按照功能拆分,部署到不同的服务器上,这样即适合为某个功能做集群,又合适重复功能的复用
-1.4 服务治理架构（SOA） SOA,全称Service-Oriented Architecture,面向服务的架构. 它把项目拆成独立的服务,对外提供.服务的提供方和消费方由企业总线统一管理
-以前出现了什么问题？
-服务越来越多，需要管理每个服务的地址 调用关系错综复杂，难以理清依赖关系 服务过多，服务状态难以管理，无法根据服务情况动态管理 服务治理要做什么？
-服务注册中心，实现服务自动注册和发现，无需人为记录服务地址 服务自动订阅，服务列表自动推送，服务调用透明化，无需关心依赖关系 动态监控服务状态监控报告，人为控制服务状态 缺点：
-服务间会有依赖关系，一旦某个环节出错会影响较大 服务关系复杂，运维、测试部署困难 1.5 微服务 微服务架构,是SOA的升华,在SOA的基础上更加细粒度的服务化,组件化.
-因此两者非常容易混淆，但其实有一些差别： 微服务的特点：
-单一职责：微服务中每一个服务都对应唯一的业务能力，做到单一职责 微：微服务的服务拆分粒度很小，例如一个用户管理就可以作为一个服务。每个服务虽小，但“五脏俱全”。 面向服务：面向服务是说每个服务都要对外暴露Rest风格服务HTTP接口API。并不关心服务的技术实现，做到与平台和语言无关，也不限定用什么技术实现，只要提供Rest的HTTP接口即可。 自治：自治是说服务间互相独立，互不干扰 团队独立：每个服务都是一个独立的开发团队，人数不能过多。 技术独立：因为是面向服务，提供Rest接口，使用什么技术没有别人干涉 前后端分离：采用前后端分离开发，提供统一Rest接口，后端不用再为PC、移动段开发不同接口 数据库分离：每个服务都使用自己的数据源 部署独立，服务间虽然有调用，但要做到服务重启不影响其它服务。有利于持续集成和持续交付。每个服务都是独立的组件，可复用，可替换，降低耦合，易维护 服务调用方式 2.1 RPC和HTTP 无论是微服务还是SOA，都面临着服务间的远程调用。那么服务间的远程调用方式有哪些呢？ 常见的远程调用方式有以下2种：
-RPC： Remote Produce Call远程过程调用，类似的还有RMI（remote method invoke）。自定义数据格式，基于原生TCP通信，速度快，效率高。早期的webservice，现在热门的dubbo，都是RPC的典型代表。 Http： http其实是一种网络传输协议，基于TCP，规定了数据传输的格式。 现在客户端浏览器与服务端通信基本都是采用Http协议，也可以用来进行远程服务调用。缺点是消息封装臃肿，优势是对服务的提供和调用方没有任何技术限定，自由灵活，更符合微服务理念。现在热门的Rest风格，就可以通过http协议来实现。 如果你们公司全部采用Java技术栈，那么使用Dubbo作为微服务架构是一个不错的选择。 相反，如果公司的技术栈多样化，而且你更青睐Spring家族，那么SpringCloud搭建微服务是不二之选。在我们的项目中，我们会选择SpringCloud套件，因此我们会使用Http方式来实现服务间调用。
-2.2 Http客户端工具 既然微服务选择了Http，那么我们就需要考虑自己来实现对请求和响应的处理。不过开源世界已经有很 多的http客户端工具，能够帮助我们做这些事情，例如：'>
-<title></title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='SpringCloudAlibaba相关框架，如：Nacos、OpenFeign、GateWay、Sentinel等等'>
+<title>SpringCloudAlibaba相关框架</title>
 
 <link rel='canonical' href='https://cheneycqg.github.io/post/springcloudalibaba/'>
 
-<link rel="stylesheet" href="/scss/style.min.83fdf04f357d6c514ee15e600463b045549e8b40c428f14454adecaa742b352f.css"><meta property='og:title' content=''>
-<meta property='og:description' content='学习目标
-掌握RestTemplate的使用 知道什么是SpringCloud 掌握搭建Eureka注册中心 了解Ribbon的负载均衡 理解Hystrix的熔断原理 系统架构演变 ​	随着互联网的发展，网站应用的规模不断扩大。需求的激增，带来的是技术上的压力。系统架构也因此也不断的演进、升级、迭代。从单一应用，到垂直拆分，到分布式服务，到SOA，以及现在火热的微服务架构，还有Google带领下来势汹涌的Service Mesh。我们到底是该乘坐微服务的船只驶向远方，还是偏安一隅得过且过？ ​	其实生活不止眼前的苟且，还有诗和远方。所以我们今天就回顾历史，看一看系统架构演变的历程；把握现在，学习现在最火的技术架构；展望未来，争取成为一名优秀的Java工程师。
-1.1 单体架构 ​	当网站流量很小时，只需一个应用，将所有功能都部署在一起，以减少部署节点和成本。单体架构就是将所有的功能、数据库、文件都部署在一台机器上，俗称All-In-One
-1.2 单体集群 单体集群,就是将单体架构复制几份
-1.3 分布式服务 分布式,是指将整个系统按照功能拆分,部署到不同的服务器上,这样即适合为某个功能做集群,又合适重复功能的复用
-1.4 服务治理架构（SOA） SOA,全称Service-Oriented Architecture,面向服务的架构. 它把项目拆成独立的服务,对外提供.服务的提供方和消费方由企业总线统一管理
-以前出现了什么问题？
-服务越来越多，需要管理每个服务的地址 调用关系错综复杂，难以理清依赖关系 服务过多，服务状态难以管理，无法根据服务情况动态管理 服务治理要做什么？
-服务注册中心，实现服务自动注册和发现，无需人为记录服务地址 服务自动订阅，服务列表自动推送，服务调用透明化，无需关心依赖关系 动态监控服务状态监控报告，人为控制服务状态 缺点：
-服务间会有依赖关系，一旦某个环节出错会影响较大 服务关系复杂，运维、测试部署困难 1.5 微服务 微服务架构,是SOA的升华,在SOA的基础上更加细粒度的服务化,组件化.
-因此两者非常容易混淆，但其实有一些差别： 微服务的特点：
-单一职责：微服务中每一个服务都对应唯一的业务能力，做到单一职责 微：微服务的服务拆分粒度很小，例如一个用户管理就可以作为一个服务。每个服务虽小，但“五脏俱全”。 面向服务：面向服务是说每个服务都要对外暴露Rest风格服务HTTP接口API。并不关心服务的技术实现，做到与平台和语言无关，也不限定用什么技术实现，只要提供Rest的HTTP接口即可。 自治：自治是说服务间互相独立，互不干扰 团队独立：每个服务都是一个独立的开发团队，人数不能过多。 技术独立：因为是面向服务，提供Rest接口，使用什么技术没有别人干涉 前后端分离：采用前后端分离开发，提供统一Rest接口，后端不用再为PC、移动段开发不同接口 数据库分离：每个服务都使用自己的数据源 部署独立，服务间虽然有调用，但要做到服务重启不影响其它服务。有利于持续集成和持续交付。每个服务都是独立的组件，可复用，可替换，降低耦合，易维护 服务调用方式 2.1 RPC和HTTP 无论是微服务还是SOA，都面临着服务间的远程调用。那么服务间的远程调用方式有哪些呢？ 常见的远程调用方式有以下2种：
-RPC： Remote Produce Call远程过程调用，类似的还有RMI（remote method invoke）。自定义数据格式，基于原生TCP通信，速度快，效率高。早期的webservice，现在热门的dubbo，都是RPC的典型代表。 Http： http其实是一种网络传输协议，基于TCP，规定了数据传输的格式。 现在客户端浏览器与服务端通信基本都是采用Http协议，也可以用来进行远程服务调用。缺点是消息封装臃肿，优势是对服务的提供和调用方没有任何技术限定，自由灵活，更符合微服务理念。现在热门的Rest风格，就可以通过http协议来实现。 如果你们公司全部采用Java技术栈，那么使用Dubbo作为微服务架构是一个不错的选择。 相反，如果公司的技术栈多样化，而且你更青睐Spring家族，那么SpringCloud搭建微服务是不二之选。在我们的项目中，我们会选择SpringCloud套件，因此我们会使用Http方式来实现服务间调用。
-2.2 Http客户端工具 既然微服务选择了Http，那么我们就需要考虑自己来实现对请求和响应的处理。不过开源世界已经有很 多的http客户端工具，能够帮助我们做这些事情，例如：'>
+<link rel="stylesheet" href="/scss/style.min.83fdf04f357d6c514ee15e600463b045549e8b40c428f14454adecaa742b352f.css"><meta property='og:title' content='SpringCloudAlibaba相关框架'>
+<meta property='og:description' content='SpringCloudAlibaba相关框架，如：Nacos、OpenFeign、GateWay、Sentinel等等'>
 <meta property='og:url' content='https://cheneycqg.github.io/post/springcloudalibaba/'>
 <meta property='og:site_name' content='Cheney Site'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' />
-<meta name="twitter:title" content="">
-<meta name="twitter:description" content="学习目标
-掌握RestTemplate的使用 知道什么是SpringCloud 掌握搭建Eureka注册中心 了解Ribbon的负载均衡 理解Hystrix的熔断原理 系统架构演变 ​	随着互联网的发展，网站应用的规模不断扩大。需求的激增，带来的是技术上的压力。系统架构也因此也不断的演进、升级、迭代。从单一应用，到垂直拆分，到分布式服务，到SOA，以及现在火热的微服务架构，还有Google带领下来势汹涌的Service Mesh。我们到底是该乘坐微服务的船只驶向远方，还是偏安一隅得过且过？ ​	其实生活不止眼前的苟且，还有诗和远方。所以我们今天就回顾历史，看一看系统架构演变的历程；把握现在，学习现在最火的技术架构；展望未来，争取成为一名优秀的Java工程师。
-1.1 单体架构 ​	当网站流量很小时，只需一个应用，将所有功能都部署在一起，以减少部署节点和成本。单体架构就是将所有的功能、数据库、文件都部署在一台机器上，俗称All-In-One
-1.2 单体集群 单体集群,就是将单体架构复制几份
-1.3 分布式服务 分布式,是指将整个系统按照功能拆分,部署到不同的服务器上,这样即适合为某个功能做集群,又合适重复功能的复用
-1.4 服务治理架构（SOA） SOA,全称Service-Oriented Architecture,面向服务的架构. 它把项目拆成独立的服务,对外提供.服务的提供方和消费方由企业总线统一管理
-以前出现了什么问题？
-服务越来越多，需要管理每个服务的地址 调用关系错综复杂，难以理清依赖关系 服务过多，服务状态难以管理，无法根据服务情况动态管理 服务治理要做什么？
-服务注册中心，实现服务自动注册和发现，无需人为记录服务地址 服务自动订阅，服务列表自动推送，服务调用透明化，无需关心依赖关系 动态监控服务状态监控报告，人为控制服务状态 缺点：
-服务间会有依赖关系，一旦某个环节出错会影响较大 服务关系复杂，运维、测试部署困难 1.5 微服务 微服务架构,是SOA的升华,在SOA的基础上更加细粒度的服务化,组件化.
-因此两者非常容易混淆，但其实有一些差别： 微服务的特点：
-单一职责：微服务中每一个服务都对应唯一的业务能力，做到单一职责 微：微服务的服务拆分粒度很小，例如一个用户管理就可以作为一个服务。每个服务虽小，但“五脏俱全”。 面向服务：面向服务是说每个服务都要对外暴露Rest风格服务HTTP接口API。并不关心服务的技术实现，做到与平台和语言无关，也不限定用什么技术实现，只要提供Rest的HTTP接口即可。 自治：自治是说服务间互相独立，互不干扰 团队独立：每个服务都是一个独立的开发团队，人数不能过多。 技术独立：因为是面向服务，提供Rest接口，使用什么技术没有别人干涉 前后端分离：采用前后端分离开发，提供统一Rest接口，后端不用再为PC、移动段开发不同接口 数据库分离：每个服务都使用自己的数据源 部署独立，服务间虽然有调用，但要做到服务重启不影响其它服务。有利于持续集成和持续交付。每个服务都是独立的组件，可复用，可替换，降低耦合，易维护 服务调用方式 2.1 RPC和HTTP 无论是微服务还是SOA，都面临着服务间的远程调用。那么服务间的远程调用方式有哪些呢？ 常见的远程调用方式有以下2种：
-RPC： Remote Produce Call远程过程调用，类似的还有RMI（remote method invoke）。自定义数据格式，基于原生TCP通信，速度快，效率高。早期的webservice，现在热门的dubbo，都是RPC的典型代表。 Http： http其实是一种网络传输协议，基于TCP，规定了数据传输的格式。 现在客户端浏览器与服务端通信基本都是采用Http协议，也可以用来进行远程服务调用。缺点是消息封装臃肿，优势是对服务的提供和调用方没有任何技术限定，自由灵活，更符合微服务理念。现在热门的Rest风格，就可以通过http协议来实现。 如果你们公司全部采用Java技术栈，那么使用Dubbo作为微服务架构是一个不错的选择。 相反，如果公司的技术栈多样化，而且你更青睐Spring家族，那么SpringCloud搭建微服务是不二之选。在我们的项目中，我们会选择SpringCloud套件，因此我们会使用Http方式来实现服务间调用。
-2.2 Http客户端工具 既然微服务选择了Http，那么我们就需要考虑自己来实现对请求和响应的处理。不过开源世界已经有很 多的http客户端工具，能够帮助我们做这些事情，例如：">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='SpringBoot' /><meta property='article:tag' content='SpringCloud' /><meta property='article:tag' content='SpringCloudAlibaba' /><meta property='article:tag' content='java' /><meta property='article:published_time' content='2023-08-31T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-08-31T00:00:00&#43;00:00'/><meta property='og:image' content='https://cheneycqg.github.io/post/springcloudalibaba/1.jpg' />
+<meta name="twitter:title" content="SpringCloudAlibaba相关框架">
+<meta name="twitter:description" content="SpringCloudAlibaba相关框架，如：Nacos、OpenFeign、GateWay、Sentinel等等"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://cheneycqg.github.io/post/springcloudalibaba/1.jpg' />
     <link rel="shortcut icon" href="/img/avatar.jpg" />
 
     </head>
@@ -577,17 +539,53 @@ RPC： Remote Produce Call远程过程调用，类似的还有RMI（remote metho
 
 
             <main class="main full-width">
-    <article class="main-article">
+    <article class="has-image main-article">
     <header class="article-header">
+        <div class="article-image">
+            <a href="/post/springcloudalibaba/">
+                <img src="/post/springcloudalibaba/1_hu8f882b5523f4513bca26aae6ef9e1d89_118876_800x0_resize_q75_box.jpg"
+                        srcset="/post/springcloudalibaba/1_hu8f882b5523f4513bca26aae6ef9e1d89_118876_800x0_resize_q75_box.jpg 800w, /post/springcloudalibaba/1_hu8f882b5523f4513bca26aae6ef9e1d89_118876_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="340" 
+                        loading="lazy"
+                        alt="Featured image of post SpringCloudAlibaba相关框架" />
+                
+            </a>
+        </div>
+    
 
     <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/springboot/" >
+                SpringBoot
+            </a>
+        
+            <a href="/categories/springcloud/" >
+                SpringCloud
+            </a>
+        
+            <a href="/categories/springcloudalibaba/" >
+                SpringCloudAlibaba
+            </a>
+        
+            <a href="/categories/java/" >
+                java
+            </a>
+        
+    </header>
     
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/post/springcloudalibaba/"></a>
+            <a href="/post/springcloudalibaba/">SpringCloudAlibaba相关框架</a>
         </h2>
     
+        
+        <h3 class="article-subtitle">
+            SpringCloudAlibaba相关框架，如：Nacos、OpenFeign、GateWay、Sentinel等等
+        </h3>
         
     </div>
 
@@ -596,6 +594,19 @@ RPC： Remote Produce Call远程过程调用，类似的还有RMI（remote metho
     
     
     <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 31, 2023</time>
+            </div>
         
 
         
@@ -624,7 +635,8 @@ RPC： Remote Produce Call远程过程调用，类似的还有RMI（remote metho
     <section class="article-content">
     
     
-    <p><strong>学习目标</strong></p>
+    <p>SpringCloudAlibaba相关框架，如：Nacos、OpenFeign、GateWay、Sentinel等等</p>
+<p><strong>学习目标</strong></p>
 <ul>
 <li>掌握RestTemplate的使用</li>
 <li>知道什么是SpringCloud</li>
@@ -6065,12 +6077,23 @@ Group：组，常用将业务相关程度较高的放同一个组（订单和支
 ></p>
 <h2 id="52实现push模式">5.2.实现push模式</h2>
 <p>详细步骤可以参考课后资料的《sentinel规则持久化》</p>
-
 </section>
 
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/tags/springboot/">SpringBoot</a>
+        
+            <a href="/tags/springcloud/">SpringCloud</a>
+        
+            <a href="/tags/springcloudalibaba/">SpringCloudAlibaba</a>
+        
+            <a href="/tags/java/">java</a>
+        
+    </section>
+
 
     
     <section class="article-copyright">
@@ -6117,6 +6140,135 @@ Group：组，常用将业务相关程度较高的放同一个组（订单和支
     
 
     
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/cacheconsistencyissues/">
+        
+        
+            <div class="article-image">
+                <img src="/post/cacheconsistencyissues/1.094bfee94778b5fc9ae8b37048553593_hu5e034b6e55d7fb3e70f8b9599cb4e80f_521165_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 对象缓存：缓存一致性问题"
+                        
+                        data-hash="md5-CUv&#43;6Ud4tfya6LNwSFU1kw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">对象缓存：缓存一致性问题</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/pagecachebythymelaefviewresolver/">
+        
+        
+            <div class="article-image">
+                <img src="/post/pagecachebythymelaefviewresolver/1.9e41d385e3016b1c7b8c513085bea608_hu1b7e29d306bb64b66f5e9fa19812dd6f_713543_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 页面缓存：通过ThymeleafViewResolver实现页面缓存"
+                        
+                        data-hash="md5-nkHTheMBaxx7jFEwhb6mCA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">页面缓存：通过ThymeleafViewResolver实现页面缓存</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/handlermethodargumentresolver/">
+        
+        
+            <div class="article-image">
+                <img src="/post/handlermethodargumentresolver/1.4cd00ce36727e1b2aef6c250c35f5743_huade970bab143261c9dc0e5174569794b_669800_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 自定义参数解析器，通过SpringMVC自动注入，判断频繁验证问题！如：用户是否登录问题"
+                        
+                        data-hash="md5-TNAM42cn4bKu9sJQw19XQw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">自定义参数解析器，通过SpringMVC自动注入，判断频繁验证问题！如：用户是否登录问题</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/validation/">
+        
+        
+            <div class="article-image">
+                <img src="/post/validation/1.589f75f3cf275db41ba46375aab2d440_hu8d877cba090037d2599dd0d3c9668b6a_888400_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post SpringBoot项目Validation组件&#43;全局异常处理进行各种参数验证问题"
+                        
+                        data-hash="md5-WJ91888nXbQbpGN1qrLUQA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">SpringBoot项目Validation组件&#43;全局异常处理进行各种参数验证问题</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/java%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/">
+        
+        
+            <div class="article-image">
+                <img src="/post/java%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/1.7b4de64568a440025557f9e2e7abb6e5_hu6e786dc2a515a9f953ec880158e4761f_540654_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Java面试宝典"
+                        
+                        data-hash="md5-e03mRWikQAJVV/ni56u25Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Java面试宝典</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
 
      
     
